@@ -17,101 +17,57 @@ function formatDate(date) {
     throw new Error("Invalid Date!");
   }
 
-  if (date < new Date()) {
-    if (new Date() - date <= 1000 * 59) {
-      return Math.round((new Date() - date) / 1000) + " секунд назад";
-    }
-    if (new Date() - date > 1000 * 59 && new Date() - date <= 1000 * 59 * 60) {
-      return Math.round((new Date() - date) / (1000 * 59)) + " минут назад";
-    }
-    if (
-      new Date() - date > 1000 * 59 * 60 &&
-      new Date() - date <= 1000 * 59 * 60 * 24
-    ) {
-      return (
-        Math.round((new Date() - date) / (1000 * 59 * 60)) + " часов назад"
-      );
-    }
-    if (
-      new Date() - date > 1000 * 59 * 60 * 24 &&
-      new Date() - date <= 1000 * 59 * 60 * 24 * 30
-    ) {
-      return (
-        Math.round((new Date() - date) / (1000 * 59 * 60 * 24)) + " дней назад"
-      );
-    }
-    if (
-      new Date() - date > 1000 * 59 * 60 * 24 * 30 &&
-      new Date() - date <= 1000 * 59 * 60 * 24 * 30 * 12
-    ) {
-      return (
-        Math.round((new Date() - date) / (1000 * 59 * 60 * 24 * 30)) +
-        " месяцев назад"
-      );
-    }
-    if (new Date() - date > 1000 * 59 * 60 * 24 * 30 * 12) {
-      return (
-        Math.round((new Date() - date) / (1000 * 59 * 60 * 24 * 30 * 12)) +
-        " лет назад"
-      );
-    }
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+  const month = day * 30;
+  const year = month * 12;
+
+  let diff = Math.abs(date - new Date());
+  let milliseconds = "";
+
+  switch (true) {
+    case diff <= minute:
+      milliseconds = Math.round(diff / second) + " секунд";
+      console.log("1");
+      break;
+    case diff > minute && diff <= hour:
+      milliseconds = Math.round(diff / minute) + " минут";
+      console.log("2");
+      break;
+    case diff > hour && diff <= day:
+      milliseconds = Math.round(diff / hour) + " часов";
+      console.log("3");
+      break;
+    case diff > day && diff <= month:
+      milliseconds = Math.round(diff / day) + " дней";
+      console.log("4");
+      break;
+    case diff > month && diff <= year:
+      milliseconds = Math.round(diff / month) + " месяцев";
+      console.log("5");
+      break;
+    case diff > year:
+      milliseconds = Math.round(diff / year) + " лет";
+      console.log("6");
+      break;
   }
 
-  if (date > new Date()) {
-    if (date - new Date() <= 1000 * 59) {
-      return "Через " + Math.round((date - new Date()) / 1000) + " секунд";
-    }
-    if (date - new Date() > 1000 * 59 && date - new Date() <= 1000 * 59 * 60) {
-      return (
-        "Через " + Math.round((date - new Date()) / (1000 * 59)) + " минут"
-      );
-    }
-    if (
-      date - new Date() > 1000 * 59 * 60 &&
-      date - new Date() <= 1000 * 59 * 60 * 24
-    ) {
-      return (
-        "Через " + Math.round((date - new Date()) / (1000 * 59 * 60)) + " часов"
-      );
-    }
-    if (
-      date - new Date() > 1000 * 59 * 60 * 24 &&
-      date - new Date() <= 1000 * 59 * 60 * 24 * 30
-    ) {
-      return (
-        "Через " +
-        Math.round((date - new Date()) / (1000 * 59 * 60 * 24)) +
-        " дней"
-      );
-    }
-    if (
-      date - new Date() > 1000 * 59 * 60 * 24 * 30 &&
-      date - new Date() <= 1000 * 59 * 60 * 24 * 30 * 12
-    ) {
-      return (
-        "Через " +
-        Math.round((date - new Date()) / (1000 * 59 * 60 * 24 * 30)) +
-        " месяцев"
-      );
-    }
-    if (date - new Date() > 1000 * 59 * 60 * 24 * 30 * 12) {
-      return (
-        "Через " +
-        Math.round((date - new Date()) / (1000 * 59 * 60 * 24 * 30 * 12)) +
-        " лет"
-      );
-    }
+  if (date < new Date()) {
+    return milliseconds + " назад";
+  } else if (date > new Date()) {
+    return "Через " + milliseconds;
+  } else {
+    return "Прямо сейчас";
   }
 }
 
-module.exports = formatDate;
+// module.exports = formatDate;
 
-// const v = new Date("2020-04-29");
-// console.log(new Date() - v);
-
-const seconds = new Date("2005-04-29 20:51:00");
+const seconds = new Date("2020-04-30 13:06:00");
 console.log(seconds);
 const now = new Date();
 console.log(now);
-console.log(now - seconds);
+console.log(seconds - now);
 console.log(formatDate(seconds));
