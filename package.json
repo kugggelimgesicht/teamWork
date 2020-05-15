@@ -18,6 +18,14 @@
   "homepage": "https://github.com/kugggelimgesicht/teamWork#readme",
   "devDependencies": {
     "jest": "^25.5.1",
-    "jsdoc": "^3.6.4"
+    "jsdoc": "^3.6.4",
+    "webpack": "^4.43.0"
+  },
+  "dependencies": {
+    "numeral": "^2.0.6"
+  },
+  "scripts": {
+    "build": "webpack -p",
+    "watch": "webpack --watch"
   }
 }
